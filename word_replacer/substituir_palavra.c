@@ -61,7 +61,7 @@ void replaceWord(char **phrase, char *oldWord, char *newWord, int initialPositio
         if (!endOfNewWord && endOfOldWord) {
             *phrase = (char *)realloc(*phrase, resize * sizeof(char));
             for (int j = resize; i < j; j--) (*phrase)[j] = (*phrase)[j - sizeDifference];
-            for (int j = i + 1; j < (int) strlen(newWord) + initialPosition; j++) {
+            for (int j = i + 1; j < (int)strlen(newWord) + initialPosition; j++) {
                 (*phrase)[j] = newWord[index];
                 index++;
             }
@@ -88,6 +88,8 @@ void analyzePhrase(char **phrase, char *oldWord, char *newWord) {
     boolean initiatedWord = FALSE, finishedString = FALSE;
     int initialPosition = 0, wordSize = 0, iterator = 0;
 
+    curWord = (char *)malloc(sizeof(char));
+
     do {
         //Se for a primeira ou uma nova palavra
         if (!initiatedWord) {
@@ -101,7 +103,7 @@ void analyzePhrase(char **phrase, char *oldWord, char *newWord) {
             wordSize++;
             feedCharArray(&curWord, (*phrase)[iterator], wordSize);
 
-        //Caso não tenha caracter válido na posição
+            //Caso não tenha caracter válido na posição
         } else if (!isalpha((*phrase)[iterator]) && initiatedWord) {
             curWord[wordSize] = '\0';
             initiatedWord = FALSE;
@@ -110,16 +112,17 @@ void analyzePhrase(char **phrase, char *oldWord, char *newWord) {
 
         //Se não hover palavra iniciada (finalizada)
         //e a palavra for igual à solicitada
-        if (!initiatedWord && !strcmp(curWord, oldWord)) {
+        if (iterator != 0 && !initiatedWord && !strcmp(curWord, oldWord))
             replaceWord(phrase, oldWord, newWord, initialPosition);
-            free(curWord);
-        }
 
         //Incremento do contador
         iterator++;
 
-    //Enquanto a String não for finalizada
+        //Enquanto a String não for finalizada
     } while (finishedString == FALSE);
+
+    //Libera o ponteiro
+    free(curWord);
 }
 
 int main() {
