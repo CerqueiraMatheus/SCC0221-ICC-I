@@ -88,8 +88,6 @@ void analyzePhrase(char **phrase, char *oldWord, char *newWord) {
     boolean initiatedWord = FALSE, finishedString = FALSE;
     int initialPosition = 0, wordSize = 0, iterator = 0;
 
-    curWord = (char *)malloc(sizeof(char));
-
     do {
         //Se for a primeira ou uma nova palavra
         if (!initiatedWord) {
