@@ -22,12 +22,18 @@ char *readline(FILE *stream) {
                 (char *)realloc(string, (position / READLINE_BUFFER + 1) * READLINE_BUFFER);
         }
         string[position] = (char)fgetc(stream);
-    } while (string[position++] != '\n' && !feof(stream));
+
+    } while (string[position++] != '\n' && string[position] != '\r' && !feof(stream));
 
     string[position - 1] = '\0';
     string = (char *)realloc(string, position);
 
     return string;
+}
+
+//Função para checar se o caracter é válido
+boolean checkChar(char c) {
+    return (isalpha(c) || c == '\r');
 }
 
 //Função para alimentar um array de char
@@ -51,7 +57,7 @@ void replaceWord(char **phrase, char *oldWord, char *newWord, int initialPositio
         if (!endOfNewWord && !endOfOldWord) {
             (*phrase)[i] = newWord[index];
             index++;
-            if (!isalpha((*phrase)[i + 1])) endOfOldWord = TRUE;
+            if (!checkChar((*phrase)[i + 1])) endOfOldWord = TRUE;
             if (newWord[index] == '\0') endOfNewWord = TRUE;
         }
 
@@ -97,12 +103,12 @@ void analyzePhrase(char **phrase, char *oldWord, char *newWord) {
         }
 
         //Se uma palavra tiver sido iniciada e tiver caracter válido na posição
-        if (isalpha((*phrase)[iterator]) && initiatedWord) {
+        if (checkChar((*phrase)[iterator]) && initiatedWord) {
             wordSize++;
             feedCharArray(&curWord, (*phrase)[iterator], wordSize);
 
             //Caso não tenha caracter válido na posição
-        } else if (!isalpha((*phrase)[iterator]) && initiatedWord) {
+        } else if (!checkChar((*phrase)[iterator]) && initiatedWord) {
             curWord[wordSize] = '\0';
             initiatedWord = FALSE;
             if ((*phrase)[iterator] == '\0') finishedString = TRUE;
@@ -134,6 +140,7 @@ int main() {
     //Analisa a frase e, caso necessário,
     //substitui e exibe
     analyzePhrase(&phrase, oldWord, newWord);
+
     printf("%s\n", phrase);
 
     //Libera os ponteiros
