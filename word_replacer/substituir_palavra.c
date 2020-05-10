@@ -141,6 +141,7 @@ int main() {
     //substitui e exibe
     analyzePhrase(&phrase, oldWord, newWord);
 
+    //Exibe a frase modificada
     printf("%s\n", phrase);
 
     //Libera os ponteiros
