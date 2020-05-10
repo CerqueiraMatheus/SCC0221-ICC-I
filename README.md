@@ -42,3 +42,19 @@ Recebe um conjunto de dados e armazena as repetições. Após, exibe graficament
 **3. Binário para Decimal (Binary to Decimal)**
 
 Conversor simples.
+
+**4. Determinante**
+
+A ser atualizado.
+
+**5. Cifra de César**
+
+A ser atualizado.
+
+**6. Substituir palavra**
+
+A ser atualizado.
+
+**7. Biblioteca**
+
+A ser atualizado.
