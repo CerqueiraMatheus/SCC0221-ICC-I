@@ -128,6 +128,7 @@ void checkBooks(struct Book **rentedBooks, int rentedSize) {
     }
 }
 
+//Função para devolver livros
 void returnBook(struct Book ***rentedBooks, int *rentedSize) {
     struct Book **newRentedList = 0;
     struct Book *aux;
