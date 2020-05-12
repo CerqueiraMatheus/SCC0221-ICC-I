@@ -12,7 +12,7 @@
 #define TRUE 1
 
 //Função para ler linha
-char *readline(FILE *stream) {
+char *readLine(FILE *stream) {
     char *string = 0;
     int position = 0;
 
@@ -133,9 +133,9 @@ int main() {
     char *oldWord, *newWord, *phrase;
 
     //Atribui os ponteiros
-    oldWord = readline(stdin);
-    newWord = readline(stdin);
-    phrase = readline(stdin);
+    oldWord = readLine(stdin);
+    newWord = readLine(stdin);
+    phrase = readLine(stdin);
 
     //Analisa a frase e, caso necessário,
     //substitui e exibe
