@@ -13,8 +13,7 @@
 void cleanInput() {
     int c;
     //Consome todos os caracteres de stdin
-    while (((c = fgetc(stdin)) != '\n') && (c != EOF))
-        ;
+    while (((c = fgetc(stdin)) != '\n') && (c != EOF));
 }
 
 //Função para ler linha
