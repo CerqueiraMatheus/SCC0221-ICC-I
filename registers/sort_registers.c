@@ -22,7 +22,7 @@ typedef struct {
 
 //Checa se é fim de linha
 boolean isEndLine(char c) {
-    return (c == '\r' || c == '\n' || c == -1);
+    return (c == '\r' || c == '\n' || c == EOF);
 }
 
 //Limpa stdin
