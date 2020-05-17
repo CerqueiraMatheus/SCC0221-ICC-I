@@ -46,7 +46,7 @@ struct Book {
 //Função para alugar livros
 void rentBook(struct Book ***storedBooks, struct Book ***rentedBooks, int *storedSize, int *rentedSize) {
     struct Book *aux;
-    boolean rent = FALSE, exists = FALSE;
+    boolean isRented = FALSE, bookExists = FALSE;
     int position = 0;
 
     //Inicializa o livro auxiliar
@@ -60,21 +60,21 @@ void rentBook(struct Book ***storedBooks, struct Book ***rentedBooks, int *store
     if ((*storedSize) != 0) {
         //Enquanto a posição for menor que a quantidade de livros armazenada
         //e o livro procurado não "existir"
-        while ((position < (*storedSize)) && (!exists)) {
+        while ((position < (*storedSize)) && (!bookExists)) {
             if (strcmp(aux->name, (*storedBooks)[position]->name) == 0) {
-                exists = TRUE;
+                bookExists = TRUE;
             } else {
                 position++;
             }
         }
 
         //Se o livro "existir"
-        if (exists) {
+        if (bookExists) {
             //Percorre a lista de emprestados e verifica
             //se está alugado
             for (int i = 0; i < (*rentedSize); i++) {
                 if (!strcmp(aux->name, (*rentedBooks)[i]->name)) {
-                    rent = TRUE;
+                    isRented = TRUE;
                 }
             }
 
@@ -82,12 +82,12 @@ void rentBook(struct Book ***storedBooks, struct Book ***rentedBooks, int *store
             if (*rentedSize >= 10) {
                 printf("Voce ja tem 10 livros alugados\n");
 
-            //Se não tiver, mas o livro já estiver
-            //alugado
-            } else if (rent) {
+                //Se não tiver, mas o livro já estiver
+                //alugado
+            } else if (isRented) {
                 printf("Livro ja alugado\n");
 
-            //Se estiver disponível
+                //Se estiver disponível
             } else {
                 (*rentedSize)++;
                 (*rentedBooks) = (struct Book **)realloc(*rentedBooks, (*rentedSize) * sizeof(struct Book *));
@@ -98,7 +98,7 @@ void rentBook(struct Book ***storedBooks, struct Book ***rentedBooks, int *store
                 printf("%s alugado com sucesso\n", ((*rentedBooks)[(*rentedSize) - 1])->name);
             }
 
-        //Se não for encontrado
+            //Se não for encontrado
         } else {
             printf("Livro nao encontrado na biblioteca\n");
         }
@@ -156,7 +156,7 @@ void returnBook(struct Book ***rentedBooks, int *rentedSize) {
     if (rent) {
         int iterator = 0;
         newRentedList = (struct Book **)realloc(newRentedList, (--(*rentedSize)) * sizeof(struct Book *));
-        for (int i = 0; i <= (*rentedSize); i++) {
+        for (int i = 0; i < (*rentedSize); i++) {
             if (i != position) {
                 newRentedList[iterator] = (*rentedBooks)[i];
                 iterator++;
@@ -167,7 +167,7 @@ void returnBook(struct Book ***rentedBooks, int *rentedSize) {
         *rentedBooks = newRentedList;
         printf("Livro %s foi devolvido com sucesso\n", aux->name);
 
-    //Do contrário, aponta o erro
+        //Do contrário, aponta o erro
     } else {
         printf("Voce nao possui esse livro\n");
     }
