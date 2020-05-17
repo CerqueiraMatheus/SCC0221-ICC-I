@@ -45,16 +45,20 @@ Conversor simples.
 
 **4. Determinante**
 
-A ser atualizado.
+Calcula determinantes de matrizes 1x1, 2x2 e 3x3.
 
 **5. Cifra de César**
 
-A ser atualizado.
+Executa a criptografia da Cifra de César.
 
-**6. Substituir palavra**
+**6. Substituir Palavra**
 
-A ser atualizado.
+Substitui palavras numa string.
 
 **7. Biblioteca**
 
-A ser atualizado.
+Simula o aluguel, listagem e empréstimos de livros de uma biblioteca.
+
+**8. Ordenar Registros**
+
+Ordena registros dados na forma (inteiro nome) pelo inteiro ou pelo nome.
