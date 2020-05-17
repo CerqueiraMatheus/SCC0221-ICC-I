@@ -31,34 +31,34 @@ Após, apenas execute o novo arquivo gerado.
 
 ## Sobre os projetos
 
-**1.  Jogo da velha**
+**1.  Jogo da velha (/jogo_da_velha)**
 
 Jogo da velha simples, apenas com X e O e com marcadores de 1 a 9 para seleção de posições.
 
-**2. Bar Plot**
+**2. Bar Plot (/bar_plot)**
 
 Recebe um conjunto de dados e armazena as repetições. Após, exibe graficamente a quantidade de repetições.
 
-**3. Binário para Decimal (Binary to Decimal)**
+**3. Binário para Decimal (/binary_to_decimal)**
 
 Conversor simples.
 
-**4. Determinante**
+**4. Determinante (/determinant)**
 
 Calcula determinantes de matrizes 1x1, 2x2 e 3x3.
 
-**5. Cifra de César**
+**5. Cifra de César (/cesar_encoding)**
 
 Executa a criptografia da Cifra de César.
 
-**6. Substituir Palavra**
+**6. Substituir Palavra (/word_replacer)**
 
 Substitui palavras numa string.
 
-**7. Biblioteca**
+**7. Biblioteca (/libr)**
 
 Simula o aluguel, listagem e empréstimos de livros de uma biblioteca.
 
-**8. Ordenar Registros**
+**8. Ordenar Registros (/registers)**
 
 Ordena registros dados na forma (inteiro nome) pelo inteiro ou pelo nome.
