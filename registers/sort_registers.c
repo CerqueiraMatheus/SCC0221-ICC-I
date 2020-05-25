@@ -14,7 +14,7 @@
 //Buffer da readRegisters
 #define READLINE_BUFFER 2048
 
-//Struct para os filmes
+//Struct para os registros
 typedef struct {
     int number;
     char *name;
