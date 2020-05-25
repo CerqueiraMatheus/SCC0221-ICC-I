@@ -11,14 +11,14 @@
 #define ALPHA 1
 #define NUMERIC 2
 
-//Buffer da readMovies
+//Buffer da readRegisters
 #define READLINE_BUFFER 2048
 
 //Struct para os filmes
 typedef struct {
-    int year;
+    int number;
     char *name;
-} Movie;
+} Register;
 
 //Checa se é fim de linha
 boolean isEndLine(char c) {
@@ -56,8 +56,8 @@ boolean checkStrings(char *s1, char *s2) {
                                               : ((s1[i] == '\0') ? FALSE : TRUE);
 }
 
-//Lê os filmes
-void readMovies(FILE *stream, Movie ***movieList, int *moviesSize) {
+//Lê os registros
+void readRegisters(FILE *stream, Register ***registersList, int *registersSize) {
     do {
         char *nameString = 0, *numberString = 0, actualChar = 0, storedChar;
         int namePosition = 0, numberPosition = 0;
@@ -108,22 +108,22 @@ void readMovies(FILE *stream, Movie ***movieList, int *moviesSize) {
         numberString[numberPosition] = '\0';
 
         //Altera a lista e adiciona os elementos da linha
-        (*movieList) = (Movie **)realloc(*movieList, (++(*moviesSize)) * sizeof(Movie *));
-        (*movieList)[(*moviesSize) - 1] = (Movie *)malloc(sizeof(Movie));
-        ((*movieList)[(*moviesSize) - 1])->name = (char *)realloc(nameString, namePosition);
-        ((*movieList)[(*moviesSize) - 1])->year = atoi((char *)realloc(numberString, numberPosition));
+        (*registersList) = (Register **)realloc(*registersList, (++(*registersSize)) * sizeof(Register *));
+        (*registersList)[(*registersSize) - 1] = (Register *)malloc(sizeof(Register));
+        ((*registersList)[(*registersSize) - 1])->name = (char *)realloc(nameString, namePosition);
+        ((*registersList)[(*registersSize) - 1])->number = atoi((char *)realloc(numberString, numberPosition));
 
     } while (!feof(stream));
 }
 
 //Organiza a lista conforme opção
-void sortMovies(Movie ***movieList, int moviesSize, int opt) {
-    Movie *aux = 0;
+void sortRegisters(Register ***registersList, int registersSize, int opt) {
+    Register *aux = 0;
     boolean swap = FALSE;
 
     //Executa o bubble sort na lista
-    for (int i = 1; i < moviesSize; i++) {
-        for (int j = moviesSize - 1; j >= i; j--) {
+    for (int i = 1; i < registersSize; i++) {
+        for (int j = registersSize - 1; j >= i; j--) {
             //Reseta o operador de troca
             swap = FALSE;
 
@@ -132,12 +132,12 @@ void sortMovies(Movie ***movieList, int moviesSize, int opt) {
             //Se a > b -> troca
             switch (opt) {
                 case ALPHA:
-                    if (checkStrings(((*movieList)[j - 1])->name, ((*movieList)[j])->name))
+                    if (checkStrings(((*registersList)[j - 1])->name, ((*registersList)[j])->name))
                         swap = TRUE;
                     break;
 
                 case NUMERIC:
-                    if (((*movieList)[j - 1])->year > ((*movieList)[j])->year)
+                    if (((*registersList)[j - 1])->number > ((*registersList)[j])->number)
                         swap = TRUE;
                     break;
             }
@@ -145,33 +145,33 @@ void sortMovies(Movie ***movieList, int moviesSize, int opt) {
             //Se o operador de troca for ativado
             //troca os itens
             if (swap) {
-                aux = (*movieList)[j - 1];
-                (*movieList)[j - 1] = (*movieList)[j];
-                (*movieList)[j] = aux;
+                aux = (*registersList)[j - 1];
+                (*registersList)[j - 1] = (*registersList)[j];
+                (*registersList)[j] = aux;
             }
         }
     }
 }
 
 int main() {
-    Movie **movieList = NULL;
-    int moviesSize = 0, opt;
+    Register **registersList = NULL;
+    int registersSize = 0, opt;
 
     //Recebe a opção
     scanf("%d", &opt);
     cleanInput();
 
     //Lê e organiza a lista conforme opção
-    readMovies(stdin, &movieList, &moviesSize);
-    sortMovies(&movieList, moviesSize, opt);
+    readRegisters(stdin, &registersList, &registersSize);
+    sortRegisters(&registersList, registersSize, opt);
 
     //Exibe e libera os elementos da lista e a lista
-    for (int i = 0; i < moviesSize; i++) {
-        printf("%d\t%s\n", movieList[i]->year, movieList[i]->name);
-        free(movieList[i]->name);
-        free(movieList[i]);
+    for (int i = 0; i < registersSize; i++) {
+        printf("%d\t%s\n", registersList[i]->number, registersList[i]->name);
+        free(registersList[i]->name);
+        free(registersList[i]);
     }
-    free(movieList);
+    free(registersList);
 
     return EXIT_SUCCESS;
 }
