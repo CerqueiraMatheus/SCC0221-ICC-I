@@ -1,5 +1,5 @@
 #include <boolean.h>
-#include <file_extractor.h>
+#include <extractor.h>
 #include <metadata.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +11,10 @@
  * 
  * */
 
+void readHeader(FILE *metadataFile, Metadata *metadata);
+void readBody(FILE *metadataFile, Metadata *metadata);
+
+//Lê e atribui Metadata
 Metadata *readMetaData(const char *fileName) {
     //Abre o arquivo de metadados
     FILE *metadataFile = fopen(fileName, "r");
@@ -27,12 +31,14 @@ Metadata *readMetaData(const char *fileName) {
     return metadata;
 }
 
+//Lê o cabeçalho de Metadata
 void readHeader(FILE *metadataFile, Metadata *metadata) {
     metadata->fileName = findValueFromName(getLineFromFile(metadataFile), FILENAME);
     metadata->keyName = findValueFromName(getLineFromFile(metadataFile), KEYNAME);
     metadata->keyType = findValueFromName(getLineFromFile(metadataFile), KEYTYPE);
 }
 
+//Lê o corpo de Metadata
 void readBody(FILE *metadataFile, Metadata *metadata) {
     boolean isNull = FALSE;
     metadata->fieldsLenght = 0;
@@ -57,6 +63,7 @@ void readBody(FILE *metadataFile, Metadata *metadata) {
     metadata->fields = listField;
 }
 
+//Libera Metadata
 void freeMetadata(Metadata *metadata) {
     free(metadata->fileName);
     free(metadata->keyName);
