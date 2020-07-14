@@ -1,8 +1,10 @@
-#include <boolean.h>
-#include <extractor.h>
+#include "extractor.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "boolean.h"
 
 #define INPUT_BUFFER 2048
 
@@ -13,7 +15,7 @@
  * */
 
 //Retorna um valor a partir do nome [in: ("nome: valor") out: "valor"].
-char *findValueFromName(const char *inputLine, char *name) {
+char *findValueFromName(char *inputLine, char *name) {
     char *output = 0;
     int nameSize = 0, index = 0;
     boolean wasFound = FALSE;
@@ -33,13 +35,14 @@ char *findValueFromName(const char *inputLine, char *name) {
     output[index] = '\0';
 
     free(newName);
+    free(inputLine);
 
     return output;
 }
 
 //Retorna uma linha a partir de um arquivo.
 char *getLineFromFile(FILE *inputFile) {
-    char *line = 0;
+    char *line = NULL;
     int pos = 0;
 
     do {
@@ -47,33 +50,21 @@ char *getLineFromFile(FILE *inputFile) {
             line = (char *)realloc(line,
                                    (pos / INPUT_BUFFER + 1) * INPUT_BUFFER);
         }
-        line[pos] = (char)fgetc(inputFile);
-    } while (line[pos++] != '\n' && !feof(inputFile));
+        line[pos++] = (char)fgetc(inputFile);
+    } while (line[pos - 1] != '\n' && !feof(inputFile));
 
     line[pos - 1] = '\0';
-    line = (char *)realloc(line, pos);
-
-    printf("LINE::: %s\n", line);
 
     return line;
 }
 
 //Retorna o número de uma string no formato "char[int]"
-int getNumberInsideBracketsFromCharArray(const char *inputLine) {
-    char *stringNumber = NULL;
-    int position = 5;
-
-    for (; position < strlen(inputLine) - 1; position++) {
-        stringNumber = (char *)realloc(stringNumber, (position - 4));
-        stringNumber[position - 5] = inputLine[position];
-    }
-
-    stringNumber[position - 4] = '\0';
-
-    int answer = atoi(stringNumber);
-    free(stringNumber);
-
-    return answer;
+int getNumberInsideBracketsFromCharArray(char *inputLine) {
+    char aux[strlen(inputLine) + 1];
+    for (int i = 0; i <= strlen(inputLine); i++) aux[i] = inputLine[i];
+    inputLine = strtok(aux, "]");
+    int auxNumber = atoi(inputLine + 5);
+    return auxNumber;
 }
 
 //Retorna uma opção através de uma linha de arquivo.
@@ -82,27 +73,27 @@ int getOptFromFile(FILE *inputFile) {
     int pos = 0, output = 0;
 
     do {
-        if (pos % INPUT_BUFFER == 0) {
+        if (pos % INPUT_BUFFER == 0)
             line = (char *)realloc(line,
                                    (pos / INPUT_BUFFER + 1) * INPUT_BUFFER);
-        }
-        line[pos] = (char)fgetc(inputFile);
-        printf("%d\n", line[pos]);
-    } while (line[pos++] != 32 && line[pos] != '\n' && !feof(inputFile));
+        line[pos++] = (char)fgetc(inputFile);
+    } while (line[pos - 1] != ' ' && line[pos - 1] != '\n' && line[pos - 1] != '\r' && !feof(inputFile));
 
-    line = (char *)realloc(line, pos);
     line[pos - 1] = '\0';
 
-    if (!strcmp(line, "insert")) {
+    if (!strcmp(line, "insert"))
         output = INSERT;
-    } else if (!strcmp(line, "index")) {
+
+    else if (!strcmp(line, "index"))
         output = INDEX;
-    } else if (!strcmp(line, "search")) {
+
+    else if (!strcmp(line, "search"))
         output = SEARCH;
-    } else {
+
+    else
         output = EXIT;
-    }
 
     free(line);
+
     return output;
 }

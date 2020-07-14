@@ -1,16 +1,17 @@
-#include <boolean.h>
-#include <extractor.h>
-#include <metadata.h>
+#include "metadata.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "boolean.h"
+#include "extractor.h"
 
 /**
  * 
  * Arquivo responsável por ler e liberar Metadata
  * 
  * */
-
 void readHeader(FILE *metadataFile, Metadata *metadata);
 void readBody(FILE *metadataFile, Metadata *metadata);
 
@@ -41,7 +42,7 @@ void readHeader(FILE *metadataFile, Metadata *metadata) {
 //Lê o corpo de Metadata
 void readBody(FILE *metadataFile, Metadata *metadata) {
     boolean isNull = FALSE;
-    metadata->fieldsLenght = 0;
+    metadata->fieldsLength = 0;
 
     Field **listField = NULL;
     for (int i = 0; !isNull; i++) {
@@ -52,7 +53,7 @@ void readBody(FILE *metadataFile, Metadata *metadata) {
 
         if (strlen(field->name) && strlen(field->type)) {
             listField[i] = field;
-            metadata->fieldsLenght++;
+            metadata->fieldsLength++;
         } else {
             free(field->name);
             free(field->type);
@@ -68,7 +69,7 @@ void freeMetadata(Metadata *metadata) {
     free(metadata->fileName);
     free(metadata->keyName);
     free(metadata->keyType);
-    for (int i = 0; i < metadata->fieldsLenght; i++) {
+    for (int i = 0; i < metadata->fieldsLength; i++) {
         free(metadata->fields[i]->name);
         free(metadata->fields[i]->type);
         free(metadata->fields[i]);

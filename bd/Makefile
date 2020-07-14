@@ -6,7 +6,7 @@ PROG=./starter.c
 LIBS=-lm
 
 all:
-	$(CC) -g -o $(BINARY) $(PROG) $(SOURCES) -I$(INCLUDES) $(LIBS)
+	@ $(CC) -g -o $(BINARY) $(PROG) $(SOURCES) -I$(INCLUDES) $(LIBS)
 
 preproc:
 	$(CC) -E $(PROG) $(SOURCES) -I$(INCLUDES) $(LIBS)

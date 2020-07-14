@@ -1,8 +1,9 @@
-#include <extractor.h>
-#include <metadata.h>
-#include <register.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "extractor.h"
+#include "metadata.h"
+#include "register.h"
 
 int main() {
     char *fileName = 0;
@@ -19,20 +20,21 @@ int main() {
 
     do {
         opt = getOptFromFile(stdin);
-        printf("OPT::: %d\n", opt);
 
         switch (opt) {
             case INSERT:
-                reg = readRegister(getLineFromFile(stdin), metadata);
-                registerSize = writeRegister(reg, metadata);
-                printf("REGSIZE::: %d\n", registerSize);
-                freeRegister(reg);
+                readRegisterFromString(&reg, getLineFromFile(stdin), metadata);
+                writeRegister(reg, metadata);
+                freeRegister(&reg);
                 break;
 
             case INDEX:
                 break;
 
             case SEARCH:
+                break;
+
+            default:
                 break;
         }
     } while (opt != EXIT);
