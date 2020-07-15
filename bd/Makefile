@@ -1,8 +1,8 @@
 CC=gcc
 INCLUDES=./include
-SOURCES=./source/extractor.c ./source/metadata.c ./source/register.c
-BINARY=./starter
-PROG=./starter.c
+SOURCES=./source/extractor.c ./source/metadata.c ./source/register.c ./source/index.c 
+BINARY=./database
+PROG=./database.c
 LIBS=-lm
 
 all:

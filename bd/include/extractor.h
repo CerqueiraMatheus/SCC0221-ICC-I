@@ -1,8 +1,9 @@
 #ifndef _EXTRACTOR_H_
 #define _EXTRACTOR_H_
 
-#include <boolean.h>
 #include <stdio.h>
+
+#include "boolean.h"
 
 //Campos estáticos dos arquivos
 #define FILENAME "filename"
@@ -20,7 +21,7 @@
 //Funções gerais
 char *findValueFromName(char *, char *);
 char *getLineFromFile(FILE *);
-int getOptFromFile(FILE *);
+int getOptionFromFile(FILE *);
 int getNumberInsideBracketsFromCharArray(char *inputLine);
 
 #endif

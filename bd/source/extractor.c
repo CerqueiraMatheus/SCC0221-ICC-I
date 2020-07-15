@@ -50,7 +50,8 @@ char *getLineFromFile(FILE *inputFile) {
             line = (char *)realloc(line,
                                    (pos / INPUT_BUFFER + 1) * INPUT_BUFFER);
         }
-        line[pos++] = (char)fgetc(inputFile);
+        char aux = (char)fgetc(inputFile);
+        if (aux != '\r') line[pos++] = aux;
     } while (line[pos - 1] != '\n' && !feof(inputFile));
 
     line[pos - 1] = '\0';
@@ -67,8 +68,8 @@ int getNumberInsideBracketsFromCharArray(char *inputLine) {
     return auxNumber;
 }
 
-//Retorna uma opção através de uma linha de arquivo.
-int getOptFromFile(FILE *inputFile) {
+//Retorna uma opção através de uma linha de arquivo
+int getOptionFromFile(FILE *inputFile) {
     char *line = 0;
     int pos = 0, output = 0;
 

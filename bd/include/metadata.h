@@ -12,7 +12,7 @@ typedef struct {
     char *fileName;
     char *keyName;
     char *keyType;
-    int fieldsLength;
+    int fieldCounter;
     Field **fields;
 } Metadata;
 
